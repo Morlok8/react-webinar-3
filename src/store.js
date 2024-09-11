@@ -4,6 +4,7 @@
 class Store {
   constructor(initState = {}) {
     this.state = initState;
+    this.max_key; //максимальный ключ элемента в состоянии
     this.listeners = []; // Слушатели изменений состояния
   }
 
@@ -34,17 +35,40 @@ class Store {
    */
   setState(newState) {
     this.state = newState;
+    console.log(this.state);
     // Вызываем всех слушателей
     for (const listener of this.listeners) listener();
+
+    this.setMaxKey();
+  }
+
+  /**
+   * Установка последнего ключа
+   */
+  setMaxKey(){
+    let max_key = 0;
+
+    if(typeof this.max_key !== 'undefined'){
+      max_key = this.max_key;
+    }
+   
+    Object.keys(this.state.list).map(list => 
+      {if(this.state.list[list].code > max_key)
+        max_key = this.state.list[list].code;
+      }
+    );
+
+    this.max_key = max_key;
   }
 
   /**
    * Добавление новой записи
    */
   addItem() {
+    this.setMaxKey();
     this.setState({
       ...this.state,
-      list: [...this.state.list, { code: this.state.list.length + 1, title: 'Новая запись' }],
+      list: [...this.state.list, { code: this.max_key + 1, title: 'Новая запись', activated: 0 }],
     });
   }
 
@@ -53,10 +77,13 @@ class Store {
    * @param code
    */
   deleteItem(code) {
+    this.setMaxKey();
+    
     this.setState({
       ...this.state,
       list: this.state.list.filter(item => item.code !== code),
     });
+    console.log("max deleted is " + this.max_key);
   }
 
   /**
@@ -69,6 +96,10 @@ class Store {
       list: this.state.list.map(item => {
         if (item.code === code) {
           item.selected = !item.selected;
+          item.activated++;
+        }
+        else {
+          item.selected = false;
         }
         return item;
       }),
