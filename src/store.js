@@ -5,6 +5,7 @@ class Store {
   constructor(initState = {}) {
     this.state = initState;
     this.max_key; //максимальный ключ элемента в состоянии
+    this.max_key_deleted; //максимальный удаленный ключ
     this.listeners = []; // Слушатели изменений состояния
   }
 
@@ -35,10 +36,8 @@ class Store {
    */
   setState(newState) {
     this.state = newState;
-    console.log(this.state);
     // Вызываем всех слушателей
     for (const listener of this.listeners) listener();
-
     this.setMaxKey();
   }
 
@@ -46,19 +45,10 @@ class Store {
    * Установка последнего ключа
    */
   setMaxKey(){
-    let max_key = 0;
-
-    if(typeof this.max_key !== 'undefined'){
-      max_key = this.max_key;
-    }
-   
-    Object.keys(this.state.list).map(list => 
-      {if(this.state.list[list].code > max_key)
-        max_key = this.state.list[list].code;
-      }
-    );
-
-    this.max_key = max_key;
+    /*Обновленный метод*/ 
+    this.max_key = Math.max.apply(Math, this.state.list.map(function(element) { return element.code; }));
+    if(this.max_key_deleted > this.max_key)
+      this.max_key = this.max_key_deleted;
   }
 
   /**
@@ -78,12 +68,15 @@ class Store {
    */
   deleteItem(code) {
     this.setMaxKey();
-    
+
+    if(code > this.max_key_deleted || typeof this.max_key_deleted == "undefined"){
+      this.max_key_deleted = code;
+    }
+      
     this.setState({
       ...this.state,
       list: this.state.list.filter(item => item.code !== code),
     });
-    console.log("max deleted is " + this.max_key);
   }
 
   /**
@@ -96,7 +89,8 @@ class Store {
       list: this.state.list.map(item => {
         if (item.code === code) {
           item.selected = !item.selected;
-          item.activated++;
+          if(item.selected)
+            item.activated++;
         }
         else {
           item.selected = false;

@@ -38,6 +38,7 @@ body {
   display: flex;
   justify-content: flex-start;
   transition: background-color 1s;
+  position: relative;
 }
 
 .Item_selected {
@@ -50,17 +51,18 @@ body {
 }
 
 .Item-title {
-  width: 70%;
-  padding: 20px 10px;
+  padding: 20px 5px;
 }
 
 .Item-actions {
   display: flex;
   justify-content: flex-end;
   padding: 20px 20px 20px 10px;
+  position: absolute;
+  right: 10px;
 }
 
 .Item-activated{
-  width: 20%;
-  padding: 20px 10px;
+  padding: 20px 0px;
+ 
 }
