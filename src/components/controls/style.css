@@ -3,3 +3,9 @@
   justify-content: flex-end;
   padding: 20px;
 }
+
+.Cart-stats{
+  padding: 20px 10px;
+  width: 12%;
+  font-weight: bold;
+}

@@ -4,8 +4,9 @@ import { generateCode } from './utils';
  * Хранилище состояния приложения
  */
 class Store {
-  constructor(initState = {}) {
+  constructor(initState = {}, initStateCart = {}) {
     this.state = initState;
+    this.cart = initStateCart;
     this.listeners = []; // Слушатели изменений состояния
   }
 
@@ -34,11 +35,16 @@ class Store {
    * Установка состояния
    * @param newState {Object}
    */
-  setState(newState) {
-    this.state = newState;
+  setState(newState, type = "state") {
+    this[type] = newState;
     // Вызываем всех слушателей
     for (const listener of this.listeners) listener();
   }
+
+  /**
+   * Установка состояния корзины
+   * @param newStateCart
+   */
 
   /**
    * Добавление новой записи
@@ -54,12 +60,71 @@ class Store {
    * Удаление записи по коду
    * @param code
    */
-  deleteItem(code) {
+  /*deleteItem(code) {
     this.setState({
       ...this.state,
       // Новый список, в котором не будет удаляемой записи
       list: this.state.list.filter(item => item.code !== code),
+    }, "state");
+  }*/
+
+  /**
+   * Наполнение корзины
+   */
+  setCart(items, code){
+    items.map(item=>{
+      if(item.code == code){
+        typeof item.count == "undefined" ? item.count = 1: item.count++;
+      }
     });
+    items = items.filter(item => item.count > 0);
+    return items;
+  }
+
+  /**
+   * Добавление товара в корзину
+   * @param code 
+   */
+  addToCart(code){
+    this.setState({
+      ...this.state,        
+      cart: this.state.list.filter(item => item.code == code),
+      cart: this.setCart(this.state.list, code),
+    }, "state");
+    console.log(this.state.cart);
+    console.log(this.state.list);
+  }
+
+  /**
+   * Удаление товара из корзины
+   * @param code
+   */
+  deleteCartItem(code) {
+    this.setState({
+      ...this.state,
+      // Новый список, в котором не будет удаляемой записи
+      cart: this.state.cart.filter(item => item.code !== code),
+    }, "state");
+  }
+
+  /**
+   * Количество товаров в корзине
+   */
+  cartCount(){
+    console.log(this.state.cart.length);
+    return this.state.cart.length;
+  }
+  /**
+   * Общая цена товаров в корзине
+   */
+  cartPrice(){
+    let cart_overall_price = 0;
+  
+    this.state.cart.map(item => {
+      cart_overall_price += item.count * item.price;  
+    });
+
+    return cart_overall_price;
   }
 
   /**

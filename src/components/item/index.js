@@ -14,16 +14,34 @@ function Item(props) {
         setCount(count + 1);
       }
     },
-    onDelete: e => {
+    onAddToCart: e => {
       e.stopPropagation();
-      props.onDelete(props.item.code);
+      props.onAddToCart(props.item.code);
     },
+    onDeleteFromCart: e => {
+      e.stopPropagation();
+      props.onDeleteFromCart(props.item.code)
+    }
   };
+
+  function typeCheck(type, asset = "button"){
+    if(type == "main"){
+      if(asset == "button")
+        return <button onClick={callbacks.onAddToCart}>Добавить</button>;
+    }
+    if(type == "cart"){
+      if(asset == "div")
+        return <div className = "Item-count">{props.item.count} шт.</div>;
+      else
+        return <button onClick={callbacks.onDeleteFromCart}>Удалить</button>;
+    }
+
+  }
 
   return (
     <div
-      className={'Item' + (props.item.selected ? ' Item_selected' : '')}
-      onClick={callbacks.onClick}
+      className={'Item' }
+      
     >
       <div className="Item-code">{props.item.code}</div>
       <div className="Item-title">
@@ -36,8 +54,14 @@ function Item(props) {
             })}`
           : ''}
       </div>
+      <div className = "Item-price">
+        {props.item.price.toLocaleString()} ₽ 
+      </div>
+
+        { typeCheck(props.type, "div")}
+
       <div className="Item-actions">
-        <button onClick={callbacks.onDelete}>Удалить</button>
+        {typeCheck(props.type)}
       </div>
     </div>
   );
@@ -50,13 +74,14 @@ Item.propTypes = {
     selected: PropTypes.bool,
     count: PropTypes.number,
   }).isRequired,
-  onDelete: PropTypes.func,
+  onAddToCart: PropTypes.func,
+  onDeleteFromCart: PropTypes.func,
   onSelect: PropTypes.func,
 };
 
-Item.defaultProps = {
+/*Item.defaultProps = {
   onDelete: () => {},
   onSelect: () => {},
-};
+};*/
 
 export default React.memo(Item);
