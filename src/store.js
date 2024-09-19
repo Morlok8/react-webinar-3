@@ -4,9 +4,9 @@ import { generateCode } from './utils';
  * Хранилище состояния приложения
  */
 class Store {
-  constructor(initState = {}, initStateCart = {}) {
+  constructor(initState = {}/*, initStateCart = {}*/) {
     this.state = initState;
-    this.cart = initStateCart;
+    //this.cart = initStateCart;
     this.listeners = []; // Слушатели изменений состояния
   }
 
@@ -86,12 +86,16 @@ class Store {
    * @param code 
    */
   addToCart(code){
+    console.log("before add cart");
+    console.log(this.state.cart);
     this.setState({
       ...this.state,        
-      cart: this.state.list.filter(item => item.code == code),
+      //cart: this.state.list.filter(item => item.code == code),
       cart: this.setCart(this.state.list, code),
     }, "state");
+    console.log("add cart");
     console.log(this.state.cart);
+    console.log("add list");
     console.log(this.state.list);
   }
 
@@ -100,6 +104,11 @@ class Store {
    * @param code
    */
   deleteCartItem(code) {
+    this.state.list.map((list)=>{
+      if(list.code == code){
+        list.count = 0;
+      } 
+    });
     this.setState({
       ...this.state,
       // Новый список, в котором не будет удаляемой записи

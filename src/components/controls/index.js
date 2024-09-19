@@ -24,7 +24,7 @@ function Controls({ cartDelete = () => {}, cartCount = () => {}, cartPrice = () 
 
   return (
     <div className="Controls">
-      <div>Количество товаров: <span class="Cart-stats">{result}</span></div>
+      <div>Количество товаров: <span className="Cart-stats">{result}</span></div>
       <button onClick={() => setButtonPopup(true)} >Перейти</button>
       <Popup trigger = {buttonPopup} setTrigger={setButtonPopup} cartProp = {cart} delete = {cartDelete} cartTotal = {cartPrice()}/>
         
