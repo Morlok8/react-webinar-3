@@ -38,8 +38,4 @@ Controls.propTypes = {
   cartCount: PropTypes.func
 };
 
-/*Controls.defaultProps = {
-  onAdd: () => {},
-};*/
-
 export default React.memo(Controls);

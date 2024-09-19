@@ -86,17 +86,10 @@ class Store {
    * @param code 
    */
   addToCart(code){
-    console.log("before add cart");
-    console.log(this.state.cart);
     this.setState({
       ...this.state,        
-      //cart: this.state.list.filter(item => item.code == code),
       cart: this.setCart(this.state.list, code),
     }, "state");
-    console.log("add cart");
-    console.log(this.state.cart);
-    console.log("add list");
-    console.log(this.state.list);
   }
 
   /**
