@@ -8,12 +8,12 @@
 }
 
 .Popup-inner .Popup-body{
-    max-height: 400px;
-    overflow-y: auto;
+    /*max-height: 400px;
+    overflow-y: auto;*/
 }
 
 .Price-total{
-    padding: 20px 20px 20px 10px;
+    padding: 20px 20px 89px 10px;
     font-weight: bold;
     display: grid;
     grid-template-columns: 20fr 3fr 4fr;
@@ -47,3 +47,25 @@
     margin: 32px;
     right: 0;
 }
+
+@media only screen and (max-height: 600px) {
+    .Popup-inner {
+      max-height: 400px;
+      overflow-x: auto;
+    }
+  }
+
+
+  @media only screen and (max-height: 400px) {
+    .Popup-inner {
+      max-height: 300px;
+      overflow-x: auto;
+    }
+  }
+
+  @media only screen and (max-height: 300px) {
+    .Popup-inner {
+      max-height: 150px;
+      overflow-x: auto;
+    }
+  }

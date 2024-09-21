@@ -4,7 +4,7 @@ import Item from '../item';
 import ItemCart from '../item-cart';
 import './style.css';
 
-function List({ list, cart=[], onAddToCart = ()=> {}, onDeleteFromCart = ()=> {}, type = "main" }) {
+function List({ list, cart=[], onAddToCart = ()=> {}, onDeleteFromCart = ()=> {}, type = "main"}) {
   if(type == "main"){
     return (
       <div className="List">
@@ -35,6 +35,17 @@ function List({ list, cart=[], onAddToCart = ()=> {}, onDeleteFromCart = ()=> {}
       </div>
     );
   }
+  /*return (
+    <div className="List">
+          {type.map(item => (
+            <div key={item.code} className="List-item">
+              {console.log(item)}
+              
+              {d}
+            </div>
+          ))}
+    </div>
+  );*/
 }
 
 List.propTypes = {
@@ -44,6 +55,11 @@ List.propTypes = {
     }),
   ),
   cart: PropTypes.arrayOf(
+    PropTypes.shape({
+      code: PropTypes.number,
+    })
+  ),
+  type:  PropTypes.arrayOf(
     PropTypes.shape({
       code: PropTypes.number,
     })

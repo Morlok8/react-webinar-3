@@ -2,9 +2,9 @@
   /*display: flex;
   justify-content: flex-start;*/
   transition: background-color 1s;
-  display: grid;
+  display: flex;
   justify-content: space-evenly;
-  grid-template-columns: 1fr 15fr 3fr 2fr 1fr;
+  /*grid-template-columns: 1fr 15fr 3fr 2fr 1fr;*/
 }
 
 .Item_selected {
@@ -19,6 +19,7 @@
 .Item-title {
   /*width: 100%;*/
   padding: 20px 10px;
+  flex: 2;
 }
 
 .Item-actions {

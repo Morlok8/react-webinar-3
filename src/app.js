@@ -4,6 +4,7 @@ import Controls from './components/controls';
 import Head from './components/head';
 import PageLayout from './components/page-layout';
 import Popup from './components/popup';
+import Item from './components/item';
 //import Controls from './components/controls';
 
 import "./styles.css";
