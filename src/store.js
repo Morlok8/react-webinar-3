@@ -71,7 +71,7 @@ class Store {
   /**
    * Наполнение корзины
    */
-  setCart(items, code){
+  /*setCart(items, code){
     items.map(item=>{
       if(item.code == code){
         typeof item.count == "undefined" ? item.count = 1: item.count++;
@@ -79,7 +79,7 @@ class Store {
     });
     items = items.filter(item => item.count > 0);
     return items;
-  }
+  }*/
 
   /**
    * Добавление товара в корзину
@@ -88,7 +88,20 @@ class Store {
   addToCart(code){
     this.setState({
       ...this.state,        
-      cart: this.setCart(this.state.list, code),
+      list: this.state.list.map(listItem => {
+        if(listItem.code == code){
+          return {
+            ...listItem,
+            count: listItem.count + 1 || 1,
+          }  
+        }
+        return listItem;
+      }),
+    }, "state");
+    
+    this.setState({
+      ...this.state,        
+      cart: this.state.list.filter(item=> item.count > 0),  
     }, "state");
   }
 
@@ -97,15 +110,20 @@ class Store {
    * @param code
    */
   deleteCartItem(code) {
-    this.state.list.map((list)=>{
-      if(list.code == code){
-        list.count = 0;
-      } 
-    });
     this.setState({
       ...this.state,
       // Новый список, в котором не будет удаляемой записи
       cart: this.state.cart.filter(item => item.code !== code),
+      list: this.state.list.map(listItem => {
+        if(typeof listItem.count !== "undefined" && listItem.code == code){
+           return {
+              ...listItem,
+              count: 0,
+            };
+        }
+        return listItem;
+
+      }),
     }, "state");
   }
 

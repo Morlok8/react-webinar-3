@@ -1,4 +1,4 @@
-body {
+/*body {
   margin: 0;
   padding: 0;
   background: #535353;
@@ -65,4 +65,8 @@ body {
 .Item-activated{
   padding: 20px 0px;
  
+}*/
+
+button{
+  width: 76px;
 }

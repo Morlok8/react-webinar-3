@@ -1,7 +1,12 @@
 .Controls {
-  display: flex;
+  display: grid;
   justify-content: flex-end;
   padding: 20px;
+  grid-template-columns: 9fr 5fr 2fr;
+}
+
+.Controls:nth-child(2){
+  text-align: right;
 }
 
 .Cart-stats{

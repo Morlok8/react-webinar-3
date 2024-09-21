@@ -4,7 +4,7 @@
   transition: background-color 1s;
   display: grid;
   justify-content: space-evenly;
-  grid-template-columns: 1fr 15fr 3fr 1fr;
+  grid-template-columns: 1fr 15fr 3fr 2fr 1fr;
 }
 
 .Item_selected {

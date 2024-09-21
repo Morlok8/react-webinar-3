@@ -1,9 +1,12 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import List from './components/list';
 import Controls from './components/controls';
 import Head from './components/head';
 import PageLayout from './components/page-layout';
+import Popup from './components/popup';
+//import Controls from './components/controls';
 
+import "./styles.css";
 /**
  * Приложение
  * @param store {Store} Хранилище состояния приложения
@@ -49,11 +52,13 @@ function App({ store }) {
     }, [store]),
 
   };
-
+  console.log(Controls);
+  const [buttonPopup, setButtonPopup] = useState(false);
   return (
     <PageLayout>
-      <Head title="Приложение на чистом JS" />
-      <Controls onAdd={callbacks.onAddItem} cart = {cart} cartCount = {callbacks.cartCount} cartPrice = {callbacks.cartPrice} cartDelete = {callbacks.onDeleteFromCart}/>
+      <Head title="Магазин" />
+      <Controls setPopup = {setButtonPopup} onAdd={callbacks.onAddItem} cart = {cart} cartCount = {callbacks.cartCount} cartPrice = {callbacks.cartPrice} cartDelete = {callbacks.onDeleteFromCart}/>
+      <Popup  trigger = {buttonPopup} setTrigger={setButtonPopup} cartProp = {cart} delete = {/*cartDelete*/callbacks.onDeleteFromCart} cartTotal = {/*cartPrice()*/callbacks.cartPrice}/>
       <List
         list={list}
         onAddToCart={callbacks.onAddToCart}

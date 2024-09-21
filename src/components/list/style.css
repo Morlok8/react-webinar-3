@@ -1,6 +1,11 @@
-.List {
+.Popup-inner .List {
+  margin-top: 71px;
 }
 
 .List-item {
   border-bottom: 1px dashed #ccc;
+}
+
+.Empty{
+  padding: 20px 10px 20px 20px;
 }
